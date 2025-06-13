@@ -2,15 +2,40 @@ using UnityEngine;
 
 public class CollectibleBehaviour : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField]
+    int coinValue = 1;
+
+    private Renderer collectibleRenderer;
+    private Color originalColor;
+    public Color highlightColor = Color.yellow;
+
     void Start()
     {
-        
+        collectibleRenderer = GetComponent<Renderer>();
+        collectibleRenderer.material = new Material(collectibleRenderer.material);
+        originalColor = collectibleRenderer.material.color;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Collect(PlayerBehaviour player)
     {
-        
+        Debug.Log("Collectible collected!");
+        player.ModifyScore(coinValue);
+        Destroy(gameObject);
+    }
+
+    public void Highlight()
+    {
+        if (collectibleRenderer != null)
+        {
+            collectibleRenderer.material.color = highlightColor;
+        }
+    }
+
+    public void Unhighlight()
+    {
+        if (collectibleRenderer != null)
+        {
+            collectibleRenderer.material.color = originalColor;
+        }
     }
 }

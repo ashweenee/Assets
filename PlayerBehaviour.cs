@@ -2,58 +2,67 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-    private bool canInteract = false;
-    private CollectibleBehaviour currentCollectible = null;
-    private TunnelDoor currentDoor = null;
+    [SerializeField]
+    int maxHealth = 100;
 
-    private void OnTriggerEnter(Collider other)
+    int currentHealth;
+    int currentScore = 0;
+
+    [SerializeField]
+    Transform cameraTransform;
+
+    [SerializeField]
+    float interactDistance = 5f;
+
+    CollectibleBehaviour currentCollectible;
+
+    void Start()
     {
-        if (other.CompareTag("Collectible"))
-        {
-            canInteract = true;
-            currentCollectible = other.GetComponent<CollectibleBehaviour>();
-            if (currentCollectible != null)
-            {
-                currentCollectible.Collect();
-            }
-        }
-        else if (other.CompareTag("Door"))
-        {
-            canInteract = true;
-            currentDoor = other.GetComponent<TunnelDoor>();
-            if (currentDoor != null)
-            {
-                OnInteract();
-            }
-        }
+        currentHealth = maxHealth;
     }
 
-    private void OnTriggerExit(Collider other)
+    void Update()
     {
-        if (other.CompareTag("Collectible") && currentCollectible != null)
+        Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, interactDistance))
         {
-            canInteract = false;
+            CollectibleBehaviour collectible = hit.collider.GetComponent<CollectibleBehaviour>();
+
+            if (collectible != null)
+            {
+                if (currentCollectible != collectible)
+                {
+                    if (currentCollectible != null)
+                        currentCollectible.Unhighlight();
+
+                    collectible.Highlight();
+                    currentCollectible = collectible;
+                }
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    collectible.Collect(this);
+                    currentCollectible = null;
+                }
+            }
+            else if (currentCollectible != null)
+            {
+                currentCollectible.Unhighlight();
+                currentCollectible = null;
+            }
+        }
+        else if (currentCollectible != null)
+        {
+            currentCollectible.Unhighlight();
             currentCollectible = null;
         }
-
-        if (other.CompareTag("Door") && currentDoor != null)
-        {
-            canInteract = false;
-            currentDoor = null;
-        }
     }
 
-    private void OnInteract()
+    public void ModifyScore(int amount)
     {
-        if (currentCollectible != null)
-        {
-            currentCollectible.Collect();
-        }
-
-        if (currentDoor != null)
-        {
-            currentDoor.Interact();
-        }
+        currentScore += amount;
+        Debug.Log("Score: " + currentScore);
     }
 }
-
