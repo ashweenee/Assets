@@ -2,15 +2,23 @@ using UnityEngine;
 
 public class LavaPit : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    AudioClip sizzleSound;
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.CompareTag("Player"))
+        {
+            if (sizzleSound != null)
+                AudioSource.PlayClipAtPoint(sizzleSound, transform.position);
+
+            Debug.Log("Player fell into lava!");
+
+            PlayerBehaviour player = other.GetComponent<PlayerBehaviour>();
+            if (player != null)
+            {
+                player.Die(); 
+            }
+        }
     }
 }
