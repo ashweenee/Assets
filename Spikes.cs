@@ -2,15 +2,23 @@ using UnityEngine;
 
 public class Spikes : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    AudioClip spikeSound;
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.CompareTag("Player"))
+        {
+            if (spikeSound != null)
+                AudioSource.PlayClipAtPoint(spikeSound, transform.position);
+
+            Debug.Log("Player hit spikes!");
+
+            PlayerBehaviour player = other.GetComponent<PlayerBehaviour>();
+            if (player != null)
+            {
+                player.Die();
+            }
+        }
     }
 }

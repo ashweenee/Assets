@@ -17,6 +17,13 @@ public class PlayerBehaviour : MonoBehaviour
     int currentHealth;
     [SerializeField] int maxHealth = 100;
 
+    [SerializeField]
+    Transform respawnPoint;
+
+    [SerializeField]
+    GameObject deathScreenUI;
+
+
     void Start()
     {
         // Auto-assign Main Camera if not assigned manually
@@ -99,10 +106,47 @@ public class PlayerBehaviour : MonoBehaviour
             currentDoor.Interact();
         }
     }
-
     public void ModifyScore(int amount)
     {
         currentScore += amount;
         Debug.Log("Score: " + currentScore);
+
+        if (currentScore >= totalCollectibles)
+        {
+            if (winScreenUI != null)
+                winScreenUI.SetActive(true);
+        }
     }
+
+    public void Die()
+    {
+        Debug.Log("Player died.");
+
+        if (deathScreenUI != null)
+            deathScreenUI.SetActive(true); 
+
+        gameObject.SetActive(false);
+
+        Invoke(nameof(Respawn), 2f);
+    }
+
+    void Respawn()
+    {
+        transform.position = respawnPoint.position;
+        transform.rotation = respawnPoint.rotation;
+
+        if (deathScreenUI != null)
+            deathScreenUI.SetActive(false);
+
+        gameObject.SetActive(true);
+    }
+
+    [SerializeField]
+    int totalCollectibles = 5;
+
+
+    [SerializeField]
+    GameObject winScreenUI;
+
+
 }
