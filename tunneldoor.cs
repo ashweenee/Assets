@@ -1,16 +1,27 @@
 using UnityEngine;
 
-public class tunneldoor : MonoBehaviour
+public class TunnelDoor : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    AudioClip openSound;
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField]
+    GameObject doorObject;
+
+    bool isOpen = false;
+
+    public void Interact()
     {
-        
+        if (isOpen) return;
+
+        Debug.Log("Door opening...");
+
+        isOpen = true;
+
+        if (openSound != null)
+            AudioSource.PlayClipAtPoint(openSound, transform.position);
+
+        if (doorObject != null)
+            doorObject.SetActive(false);
     }
 }
