@@ -1,28 +1,33 @@
 using UnityEngine;
+using UnityEngine.UI; // Add this for UI components
 
 public class PlayerBehaviour : MonoBehaviour
 {
-    [SerializeField]
-    Transform cameraTransform;
+    [Header("Camera")]
+    [SerializeField] Transform cameraTransform;
 
-    [SerializeField]
-    float interactDistance = 5f;
+    [Header("Interaction")]
+    [SerializeField] float interactDistance = 5f;
 
-    bool canInteract = false;
-
-    TunnelDoor currentDoor = null;
-    CollectibleBehaviour currentCollectible = null;
-
-    int currentScore = 0;
-    int currentHealth;
+    [Header("Game Stats")]
     [SerializeField] int maxHealth = 100;
+    [SerializeField] int totalCollectibles = 5;
 
-    [SerializeField]
-    Transform respawnPoint;
+    [Header("UI References")]
+    [SerializeField] GameObject deathScreenUI;
+    [SerializeField] GameObject winScreenUI;
+    [SerializeField] Text scoreText; // Add this line - for displaying current score
 
-    [SerializeField]
-    GameObject deathScreenUI;
+    [Header("Respawn")]
+    [SerializeField] Transform respawnPoint;
 
+    // Private variables
+    private bool canInteract = false;
+    private TunnelDoor currentDoor = null;
+    private CollectibleBehaviour currentCollectible = null;
+    private int currentScore = 0;
+    private int currentHealth;
+    private int collectiblesCollected = 0;
 
     void Start()
     {
@@ -34,6 +39,15 @@ public class PlayerBehaviour : MonoBehaviour
         }
 
         currentHealth = maxHealth;
+
+        // Hide UI screens at start
+        if (deathScreenUI != null)
+            deathScreenUI.SetActive(false);
+        if (winScreenUI != null)
+            winScreenUI.SetActive(false);
+
+        // Initialize score display
+        UpdateScoreDisplay();
     }
 
     void Update()
@@ -53,7 +67,7 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 if (currentCollectible != collectible)
                 {
-                    if (currentCollectible != null)
+                    if (currentCollectible != collectible)
                         currentCollectible.Unhighlight();
 
                     collectible.Highlight();
@@ -106,15 +120,42 @@ public class PlayerBehaviour : MonoBehaviour
             currentDoor.Interact();
         }
     }
+
     public void ModifyScore(int amount)
     {
         currentScore += amount;
-        Debug.Log("Score: " + currentScore);
+        collectiblesCollected++;
+        Debug.Log("Score: " + currentScore + " | Collectibles: " + collectiblesCollected + "/" + totalCollectibles);
 
-        if (currentScore >= totalCollectibles)
+        // Update the UI display
+        UpdateScoreDisplay();
+
+        // Check if all collectibles are collected
+        if (collectiblesCollected >= totalCollectibles)
         {
-            if (winScreenUI != null)
-                winScreenUI.SetActive(true);
+            ShowWinScreen();
+        }
+    }
+
+    private void UpdateScoreDisplay()
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = "Collectibles: " + collectiblesCollected + "/" + totalCollectibles + " | Score: " + currentScore;
+            Debug.Log("UI Updated: " + scoreText.text); // Add this line
+        }
+        else
+        {
+            Debug.LogError("scoreText is null!"); // Add this line
+        }
+    }
+    private void ShowWinScreen()
+    {
+        Debug.Log("All collectibles collected! Showing win screen.");
+        if (winScreenUI != null)
+        {
+            winScreenUI.SetActive(true);
+            Time.timeScale = 0f; // Pause the game
         }
     }
 
@@ -123,30 +164,42 @@ public class PlayerBehaviour : MonoBehaviour
         Debug.Log("Player died.");
 
         if (deathScreenUI != null)
-            deathScreenUI.SetActive(true); 
+            deathScreenUI.SetActive(true);
 
-        gameObject.SetActive(false);
+        // Don't disable the player GameObject immediately
+        // Just stop player movement/input instead
+        GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
 
         Invoke(nameof(Respawn), 2f);
     }
 
     void Respawn()
     {
-        transform.position = respawnPoint.position;
-        transform.rotation = respawnPoint.rotation;
+        Debug.Log("Respawning player.");
+
+        if (respawnPoint != null)
+        {
+            transform.position = respawnPoint.position;
+            transform.rotation = respawnPoint.rotation;
+        }
+        else
+        {
+            Debug.LogWarning("No respawn point assigned!");
+        }
 
         if (deathScreenUI != null)
             deathScreenUI.SetActive(false);
 
-        gameObject.SetActive(true);
+        // Reset health
+        currentHealth = maxHealth;
     }
 
-    [SerializeField]
-    int totalCollectibles = 5;
-
-
-    [SerializeField]
-    GameObject winScreenUI;
-
-
+    // Public method to restart the game
+    public void RestartGame()
+    {
+        Time.timeScale = 1f; // Resume time
+        UnityEngine.SceneManagement.SceneManager.LoadScene(
+            UnityEngine.SceneManagement.SceneManager.GetActiveScene().name
+        );
+    }
 }
