@@ -1,3 +1,9 @@
+/*
+Author: Ashwinii Krishnan
+Date: 16th June 2025
+Description: Script for the tunnel door that will open when the character goes close to it.
+*/
+
 using UnityEngine;
 
 public class TunnelDoor : MonoBehaviour

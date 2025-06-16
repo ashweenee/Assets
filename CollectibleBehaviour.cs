@@ -1,3 +1,10 @@
+/*
+Author: Ashwinii Krishnan
+Date: 16th June 2025
+Description: Script for the collectible items in my game, which is all the crystals. When the character
+             touches a collectible crystal, it will collect it and increase the score.
+*/
+
 using UnityEngine;
 
 public class CollectibleBehaviour : MonoBehaviour

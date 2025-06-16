@@ -1,3 +1,9 @@
+/*
+Author: Ashwinii Krishnan
+Date: 16th June 2025
+Description: Script for my character's behaviour in my game. Theres player interactions like with the door, player dying and respawning, and UI things.
+*/
+
 using UnityEngine;
 using UnityEngine.UI; // Add this for UI components
 
@@ -13,13 +19,17 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] int maxHealth = 100;
     [SerializeField] int totalCollectibles = 5;
 
-    [Header("UI References")]
+    [Header("UI Updates")]
     [SerializeField] GameObject deathScreenUI;
     [SerializeField] GameObject winScreenUI;
     [SerializeField] Text scoreText; // Add this line - for displaying current score
 
     [Header("Respawn")]
     [SerializeField] Transform respawnPoint;
+
+    [Header("Audio")]
+    [SerializeField] AudioClip deathSound; // Death sound effect
+    [SerializeField] AudioClip winSound;   // Win sound effect (optional)
 
     // Private variables
     private bool canInteract = false;
@@ -149,9 +159,16 @@ public class PlayerBehaviour : MonoBehaviour
             Debug.LogError("scoreText is null!"); // Add this line
         }
     }
+
     private void ShowWinScreen()
     {
         Debug.Log("All collectibles collected! Showing win screen.");
+        
+        if (winSound != null)
+        {
+            AudioSource.PlayClipAtPoint(winSound, transform.position);
+        }
+        
         if (winScreenUI != null)
         {
             winScreenUI.SetActive(true);
@@ -162,6 +179,11 @@ public class PlayerBehaviour : MonoBehaviour
     public void Die()
     {
         Debug.Log("Player died.");
+
+        if (deathSound != null)
+        {
+            AudioSource.PlayClipAtPoint(deathSound, transform.position);
+        }
 
         if (deathScreenUI != null)
             deathScreenUI.SetActive(true);

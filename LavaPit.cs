@@ -1,3 +1,10 @@
+/*
+Author: Ashwinii Krishnan
+Date: 16th June 2025
+Description: Script for the lava pit hazard that is in my game. The character will die if they accidentally land in the lava. 
+             The script is similar to the Spikes script as both intends to kill the character upon contact.
+*/
+
 using UnityEngine;
 
 public class LavaPit : MonoBehaviour
