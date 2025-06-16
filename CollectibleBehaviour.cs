@@ -6,16 +6,21 @@ Description: Script for the collectible items in my game, which is all the cryst
 */
 
 using UnityEngine;
-
 public class CollectibleBehaviour : MonoBehaviour
 {
+    /// <summary> for evry collectible collected, five points is added </summary>
     [SerializeField]
-    int collectibleValue = 5;
+    private int collectibleValue = 5;
 
-    private Renderer collectibleRenderer;
-    private Color originalColor;
+    /// <summary> when character goes near, collectible should light up yellow </summary>
     public Color highlightColor = Color.yellow;
 
+    /// <summary> collectibles renderer </summary>
+    private Renderer collectibleRenderer;
+
+    private Color originalColor;
+
+    /// <summary> collectibles material and color </summary>
     void Start()
     {
         collectibleRenderer = GetComponent<Renderer>();
@@ -23,15 +28,16 @@ public class CollectibleBehaviour : MonoBehaviour
         originalColor = collectibleRenderer.material.color;
     }
 
-    // Add this method to detect when player touches the collectible
+    /// <summary> lets character collect the crystal </summary>
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Something entered collectible trigger: " + other.name);
-        
+
         if (other.CompareTag("Player"))
         {
             Debug.Log("Player detected! Attempting to collect...");
             PlayerBehaviour player = other.GetComponent<PlayerBehaviour>();
+
             if (player != null)
             {
                 Collect(player);
@@ -47,6 +53,7 @@ public class CollectibleBehaviour : MonoBehaviour
         }
     }
 
+    /// <summary> collects the collectible, adds score to the player and removes it </summary>
     public void Collect(PlayerBehaviour player)
     {
         Debug.Log("Collectible collected!");
@@ -54,6 +61,7 @@ public class CollectibleBehaviour : MonoBehaviour
         Destroy(gameObject);
     }
 
+    /// <summary> should highlight the crystal </summary>
     public void Highlight()
     {
         if (collectibleRenderer != null)
@@ -61,7 +69,6 @@ public class CollectibleBehaviour : MonoBehaviour
             collectibleRenderer.material.color = highlightColor;
         }
     }
-
     public void Unhighlight()
     {
         if (collectibleRenderer != null)

@@ -6,12 +6,13 @@ Description: Script for the spike hazard that is in my game. The character will 
 */
 
 using UnityEngine;
-
 public class Spikes : MonoBehaviour
 {
+    /// <summary> character dying to spikes sound </summary>
     [SerializeField]
-    AudioClip spikeSound;
+    private AudioClip spikeSound;
 
+    /// <summary> sees whether character lands in spikes or not </summary>
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))

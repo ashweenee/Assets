@@ -6,12 +6,13 @@ Description: Script for the lava pit hazard that is in my game. The character wi
 */
 
 using UnityEngine;
-
 public class LavaPit : MonoBehaviour
 {
+    /// <summary> character dying in lava sound </summary>
     [SerializeField]
-    AudioClip sizzleSound;
+    private AudioClip sizzleSound;
 
+    /// <summary> sees when character falls in lava </summary>
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -24,9 +25,9 @@ public class LavaPit : MonoBehaviour
             PlayerBehaviour player = other.GetComponent<PlayerBehaviour>();
             if (player != null)
             {
-                player.Die(); 
+                player.Die();
             }
         }
     }
-    
 }
+
