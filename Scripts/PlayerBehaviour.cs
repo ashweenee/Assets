@@ -16,57 +16,57 @@ public class PlayerBehaviour : MonoBehaviour
     [Header("Interaction")]
     [SerializeField] private float interactDistance = 5f;
 
-    /// <summary> health value for the character </summary>
+    /// health value for the character 
     [Header("Health Stats")]
     [SerializeField] private int maxHealth = 100;
 
-    /// <summary> total number of collectibles needed to win </summary>
+    /// total number of collectibles needed to win
     [SerializeField] private int totalCollectibles = 5;
 
-    /// <summary> UI tht is supposed to show when character dies </summary>
+    ///  UI tht is supposed to show when character dies
     [Header("UI Updates")]
     [SerializeField] private GameObject deathScreenUI;
 
-    /// <summary> UI that is supposed to show up when all collectibles are collected </summary>
+    ///  UI that is supposed to show up when all collectibles are collected 
     [SerializeField] private GameObject winScreenUI;
 
-    /// <summary> the UI thats supposed to show the current score and collectible count </summary>
+    ///  the UI thats supposed to show the current score and collectible count 
     [SerializeField] private Text scoreText;
 
-    /// <summary> respawn and spawn point </summary>
+    ///  respawn and spawn point 
     [Header("Respawn")]
     [SerializeField] private Transform respawnPoint;
 
-    /// <summary> character dying noise </summary>
+    ///  character dying noise 
     [Header("Audio")]
     [SerializeField] private AudioClip deathSound;
 
-    /// <summary> character winning noise </summary>
+    /// character winning noise 
     [SerializeField] private AudioClip winSound;
 
     // Private Variables 
 
-    /// <summary> for character to open door </summary>
+    /// for character to open door 
     private bool canInteract = false;
 
-    /// <summary> for character to open door </summary>
+    /// for character to open door 
     private TunnelDoor currentDoor = null;
 
-    /// <summary> for collectible crystals </summary>
+    /// for collectible crystals 
     private CollectibleBehaviour currentCollectible = null;
 
-    /// <summary> for current score of the player/character </summary>
+    /// for current score of the player/character 
     private int currentScore = 0;
 
-    /// <summary> current health of the character </summary>
+    /// current health of the character
     private int currentHealth;
 
-    /// <summary> number of collectibles the characater collected </summary>
+    /// number of collectibles the characater collected 
     private int collectiblesCollected = 0;
 
     // All the Initialising
 
-    /// <summary> setting up score display </summary>
+    /// setting up score display 
     void Start()
     {
         if (cameraTransform == null && Camera.main != null)
@@ -85,7 +85,7 @@ public class PlayerBehaviour : MonoBehaviour
         UpdateScoreDisplay();
     }
 
-    /// <summary> detects when the character is near a door </summary>
+    /// detects when the character is near a door 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Door"))
@@ -96,7 +96,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    /// <summary> detects when character leaves the door area </summary>
+    ///detects when character leaves the door area 
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Door"))
@@ -108,7 +108,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     // The Game Part
 
-    /// <summary> character interacting with a door </summary>
+    /// character interacting with a door 
     void OnInteract()
     {
         if (currentDoor != null)
@@ -118,7 +118,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    /// <summary> updates character score and checks is they won </summary>
+    /// updates character score and checks is they won 
     public void ModifyScore(int amount)
     {
         currentScore += amount;
@@ -132,7 +132,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    /// <summary> updates the score and collectibles colected </summary>
+    /// updates the score and collectibles colected 
     private void UpdateScoreDisplay()
     {
         if (scoreText != null)
@@ -146,7 +146,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    /// <summary> pauses game once character collected all the five collectibels </summary>
+    /// pauses game once character collected all the five collectibels
     private void ShowWinScreen()
     {
         Debug.Log("All collectibles collected! Showing win screen.");
@@ -161,7 +161,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    /// <summary> kills character and makes them respawn </summary>
+    /// kills character and makes them respawn 
     public void Die()
     {
         Debug.Log("Player died.");
@@ -182,7 +182,7 @@ public class PlayerBehaviour : MonoBehaviour
         Invoke(nameof(Respawn), 2f);
     }
 
-    /// <summary> makes the character respawn at the spawn point </summary>
+    /// makes the character respawn at the spawn point 
     void Respawn()
     {
         Debug.Log("Respawning player.");
@@ -216,7 +216,7 @@ public class PlayerBehaviour : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    /// <summary> reloads the current scene </summary>
+    /// reloads the current scene 
     public void RestartGame()
     {
         Time.timeScale = 1f;

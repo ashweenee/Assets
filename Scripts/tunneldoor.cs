@@ -7,18 +7,18 @@ Description: Script for the tunnel door that will open when the character goes c
 using UnityEngine;
 public class TunnelDoor : MonoBehaviour
 {
-    /// <summary> door opening sound </summary>
+    /// door opening sound 
     [SerializeField]
     private AudioClip openSound;
 
-    /// <summary> door to be disabled </summary>
+    /// door to be disabled
     [SerializeField]
     private GameObject doorObject;
 
-    /// <summary> checks if door is open alrdy </summary>
+    /// checks if door is open alrdy 
     private bool isOpen = false;
 
-    /// <summary> opens door </summary>
+    /// opens door 
     public void Interact()
     {
         if (isOpen) return;

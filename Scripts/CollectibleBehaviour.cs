@@ -8,19 +8,19 @@ Description: Script for the collectible items in my game, which is all the cryst
 using UnityEngine;
 public class CollectibleBehaviour : MonoBehaviour
 {
-    /// <summary> for evry collectible collected, five points is added </summary>
+    /// for evry collectible collected, five points is added 
     [SerializeField]
     private int collectibleValue = 5;
 
-    /// <summary> when character goes near, collectible should light up yellow </summary>
+    /// when character goes near, collectible should light up yellow 
     public Color highlightColor = Color.yellow;
 
-    /// <summary> collectibles renderer </summary>
+    ///collectibles renderer 
     private Renderer collectibleRenderer;
 
     private Color originalColor;
 
-    /// <summary> collectibles material and color </summary>
+    /// collectibles material and color 
     void Start()
     {
         collectibleRenderer = GetComponent<Renderer>();
@@ -28,7 +28,7 @@ public class CollectibleBehaviour : MonoBehaviour
         originalColor = collectibleRenderer.material.color;
     }
 
-    /// <summary> lets character collect the crystal </summary>
+    /// lets character collect the crystal 
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Something entered collectible trigger: " + other.name);
@@ -53,7 +53,7 @@ public class CollectibleBehaviour : MonoBehaviour
         }
     }
 
-    /// <summary> collects the collectible, adds score to the player and removes it </summary>
+    /// collects the collectible, adds score to the player and removes it 
     public void Collect(PlayerBehaviour player)
     {
         Debug.Log("Collectible collected!");
@@ -61,7 +61,7 @@ public class CollectibleBehaviour : MonoBehaviour
         Destroy(gameObject);
     }
 
-    /// <summary> should highlight the crystal </summary>
+    /// should highlight the crystal
     public void Highlight()
     {
         if (collectibleRenderer != null)
