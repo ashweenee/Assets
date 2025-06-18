@@ -1,34 +1,55 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcf7219bab7fe46a1ad266029b2fee19, type: 3}
-  m_Name: Readme
-  m_EditorClassIdentifier: 
-  icon: {fileID: 2800000, guid: 727a75301c3d24613a3ebcec4a24c2c8, type: 3}
-  title: URP Empty Template
-  sections:
-  - heading: Welcome to the Universal Render Pipeline
-    text: This template includes the settings and assets you need to start creating with the Universal Render Pipeline.
-    linkText: 
-    url:
-  - heading: URP Documentation
-    text:
-    linkText: Read more about URP
-    url: https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@latest
-  - heading: Forums
-    text:
-    linkText: Get answers and support
-    url: https://forum.unity.com/forums/universal-render-pipeline.383/
-  - heading: Report bugs
-    text:
-    linkText: Submit a report
-    url: https://unity3d.com/unity/qa/bug-reporting
-  loadedLayout: 1
+I3E_Assignment1
+
+Name: Ashwinii Krishnan
+
+1. How to Use and Run the Application
+
+Key Controls:
+- Forward / Backward → W/S keys  
+- Left / Right → A/D keys  
+- Look Around → Move the mouse  
+
+Steps to Run the Game:
+1. Go to my GitHub repository:  
+   [https://github.com/ashweenee/I3E_Asg1_AshwiniiKrishnan.git]
+2. Go to the `Scripts` folder to access all my scripts
+3. Open the project in Unity Editor 6000.0.28f1
+4. Click Play in the Unity Editor and go to Game Mode to test
+
+2. Platforms, Hardware & Settings
+
+Requirements and Specifications:
+- Platform → Windows  
+- Unity Version → 6000.0.28f1  
+- Resolution → 1920x1080  
+
+ 3. Known Limitations / Bugs
+
+- The highlighting part on the collectible does not work well  
+- UI does not work as there is no WinScreen or DeathScreen  
+- Character can randomly slip through barrels and fall into lava pit  
+- Can only be interacted with mouse and WASD, no `E` key to collect  
+
+ 4. References & Credits
+
+ Sound Effects:
+- BGM: [Krzysiek1105 - 699744](https://freesound.org/people/Krzysiek1105/sounds/699744/)  
+- Death Sound: [tonsil5 - 555411](https://freesound.org/people/tonsil5/sounds/555411/)  
+- Winning Sound: [Unlistenable - 391539](https://freesound.org/people/Unlistenable/sounds/391539/)  
+- All sounds from [Freesound.org](https://freesound.org)  
+
+ Models:
+- All models created manually by me (reused from 3RT project)
+
+Textures:
+- Floor/lava material from Unity Starter Assets:  
+  [Lava Flowing Shader](https://assetstore.unity.com/packages/vfx/shaders/lava-flowing-shader-33635)
+
+Fonts / UI:
+- Unity default font used
+
+Scripts:
+- All scripts written by me
+
+
+
